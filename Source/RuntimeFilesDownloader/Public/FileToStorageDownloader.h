@@ -54,6 +54,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "File To Storage Downloader|Main", meta = (DisplayName = "Download File To Storage"))
 	static UFileToStorageDownloader* BP_DownloadFileToStorage(const FString& URL, const FString& SavePath, float Timeout, const FString& ContentType, const FOnDownloadProgress& OnProgress, const FOnFileToStorageDownloadComplete& OnComplete);
 
+    /**
+     * Download the file and save it to the device disk. Recommended for Blueprints only
+     *
+     * @param URL The file URL to be downloaded
+     * @param SavePath The absolute path and file name to save the downloaded file
+     * @param Timeout Maximum waiting time in case of zero download progress, sec
+     * @param Headers The specified string will be set to the header in the Content-Type field. Enter MIME to specify the download file type
+     * @param OnProgress Delegate broadcast on download progress
+     * @param OnComplete Delegate broadcast on download complete
+     */
+    UFUNCTION(BlueprintCallable, Category = "File To Storage Downloader|Main", meta = (DisplayName = "Download File To Storage With Header"))
+    static UFileToStorageDownloader* BP_DownloadFileToStorageWithHeader(const FString& URL, const FString& SavePath, float Timeout, TMap<FString, FString> Headers, const FOnDownloadProgress& OnProgress, const FOnFileToStorageDownloadComplete& OnComplete);
 	/**
 	 * Download the file and save it to the device disk. Recommended for C++ only
 	 *
@@ -77,6 +89,7 @@ private:
 	 * @param ContentType The specified string will be set to the header in the Content-Type field. Enter MIME to specify the download file type
 	 */
 	void DownloadFileToStorage(const FString& URL, const FString& SavePath, float Timeout, const FString& ContentType);
+    void DownloadFileToStorageWithHeader(const FString& URL, const FString& SavePath, float Timeout, TMap<FString, FString> Headers);
 
 	/** The path where to save the downloaded file */
 	FString FileSavePath;
